@@ -1,22 +1,31 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Home, User, Code, Briefcase, FolderGit2, FileText, Mail, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { useLanguage } from "@/contexts/LanguageContext";
+import type { LanguageCode } from "@/i18n/translations";
 
-const navItems = [
-  { id: "hero", label: "Inicio", icon: Home },
-  { id: "about", label: "Sobre mí", icon: User },
-  { id: "skills", label: "Habilidades", icon: Code },
-  { id: "services", label: "Servicios", icon: Briefcase },
-  { id: "projects", label: "Proyectos", icon: FolderGit2 },
-  { id: "cv", label: "CV", icon: FileText },
-  { id: "contact", label: "Contacto", icon: Mail },
-];
+const iconMap = {
+  hero: Home,
+  about: User,
+  skills: Code,
+  services: Briefcase,
+  projects: FolderGit2,
+  cv: FileText,
+  contact: Mail,
+} as const;
 
 export default function Sidebar() {
+  const { copy, language, setLanguage, options } = useLanguage();
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("hero");
+  const navItems = copy.sidebar.navItems;
+
+  const numberedOptions = useMemo(
+    () => options.map((option, index) => ({ ...option, label: `${index + 1}. ${option.label}` })),
+    [options]
+  );
 
   useEffect(() => {
     const handleScroll = () => {
@@ -34,7 +43,14 @@ export default function Sidebar() {
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [navItems]);
+
+  const handleDownload = () => {
+    const link = document.createElement("a");
+    link.href = "/cv.pdf";
+    link.download = copy.downloadFileName;
+    link.click();
+  };
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
@@ -52,7 +68,7 @@ export default function Sidebar() {
         size="icon"
         className="fixed top-4 left-4 z-50 lg:hidden bg-sidebar border border-sidebar-border"
         onClick={() => setIsMobileOpen(!isMobileOpen)}
-        aria-label="Toggle menu"
+        aria-label={isMobileOpen ? copy.sidebar.mobileMenuAria.close : copy.sidebar.mobileMenuAria.open}
       >
         {isMobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
       </Button>
@@ -81,7 +97,7 @@ export default function Sidebar() {
                 <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
                   <Code className="h-5 w-5 text-primary-foreground" />
                 </div>
-                <span className="font-bold text-lg text-foreground">VibeCoding</span>
+                <span className="font-bold text-lg text-foreground">{copy.sidebar.brand}</span>
               </div>
             )}
             <Button
@@ -89,16 +105,37 @@ export default function Sidebar() {
               size="icon"
               className="hidden lg:flex h-8 w-8"
               onClick={() => setIsCollapsed(!isCollapsed)}
-              aria-label="Toggle sidebar"
+              aria-label={copy.sidebar.toggleSidebarAria}
             >
               <Menu className="h-4 w-4" />
             </Button>
           </div>
 
+          {!isCollapsed && (
+            <div className="mb-6">
+              <label htmlFor="language" className="block text-xs uppercase tracking-wide text-muted-foreground mb-2">
+                {copy.languageSelectorLabel}
+              </label>
+              <select
+                id="language"
+                value={language}
+                onChange={(event) => setLanguage(event.target.value as LanguageCode)}
+                aria-label={copy.languageSelectorAria}
+                className="w-full rounded-md border border-sidebar-border bg-sidebar px-3 py-2 text-sm text-sidebar-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+              >
+                {numberedOptions.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
+
           {/* Navigation */}
           <nav className="flex-1 space-y-2">
             {navItems.map((item) => {
-              const Icon = item.icon;
+              const Icon = iconMap[item.id as keyof typeof iconMap] ?? FileText;
               const isActive = activeSection === item.id;
 
               return (
@@ -127,15 +164,10 @@ export default function Sidebar() {
               "w-full mt-4 bg-primary text-primary-foreground hover:bg-primary/90",
               isCollapsed && "px-0"
             )}
-            onClick={() => {
-              const link = document.createElement('a');
-              link.href = '/cv.pdf';
-              link.download = 'CV_Frontend_Developer.pdf';
-              link.click();
-            }}
+            onClick={handleDownload}
           >
             <FileText className="h-4 w-4" />
-            {!isCollapsed && <span className="ml-2">Descargar CV</span>}
+            {!isCollapsed && <span className="ml-2">{copy.sidebar.downloadCta}</span>}
           </Button>
         </div>
       </aside>

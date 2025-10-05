@@ -1,8 +1,21 @@
+import { Fragment } from "react";
 import { Button } from "@/components/ui/button";
 import { Download, Mail, Rocket } from "lucide-react";
 import profileImage from "@/assets/profile.jpg";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { cn } from "@/lib/utils";
 
 export default function Hero() {
+  const { copy } = useLanguage();
+  const hero = copy.hero;
+
+  const handleDownload = () => {
+    const link = document.createElement("a");
+    link.href = "/cv.pdf";
+    link.download = copy.downloadFileName;
+    link.click();
+  };
+
   const scrollToContact = () => {
     document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
   };
@@ -17,50 +30,35 @@ export default function Hero() {
         <div className="space-y-6 animate-fade-in">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary/50 border border-border">
             <Rocket className="h-4 w-4 text-primary animate-glow" />
-            <span className="text-sm text-muted-foreground">Disponible para proyectos</span>
+            <span className="text-sm text-muted-foreground">{hero.badge}</span>
           </div>
 
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
-            Frontend Developer{" "}
-            <span className="text-primary">🚀</span>
-            <br />
-            <span className="text-primary">|</span> React,
-            <br />
-            JavaScript,
-            <br />
-            Tailwind CSS{" "}
-            <span className="text-primary">|</span>
-            <br />
-            Email HTML
-            <br />
-            Specialist{" "}
-            <span className="text-primary">✉️ |</span> Vibe
-            <br />
-            Coding & AI for
-            <br />
-            Modern Websites{" "}
-            <span className="text-primary">🤖</span>
+            {hero.headingLines.map((line, lineIndex) => (
+              <Fragment key={lineIndex}>
+                {line.parts.map((part, partIndex) => (
+                  <span
+                    key={partIndex}
+                    className={cn(part.highlight && "text-primary")}
+                  >
+                    {part.text}
+                  </span>
+                ))}
+                {lineIndex < hero.headingLines.length - 1 && <br />}
+              </Fragment>
+            ))}
           </h1>
 
-          <p className="text-lg text-muted-foreground max-w-xl">
-            I'm a passionate frontend developer specializing in creating modern, responsive web
-            applications and crafting engaging email campaigns. I leverage AI tools to enhance my
-            workflow and deliver exceptional results.
-          </p>
+          <p className="text-lg text-muted-foreground max-w-xl">{hero.description}</p>
 
           <div className="flex flex-wrap gap-4">
             <Button
               size="lg"
               className="bg-primary text-primary-foreground hover:bg-primary/90 shadow-glow"
-              onClick={() => {
-                const link = document.createElement('a');
-                link.href = '/cv.pdf';
-                link.download = 'CV_Frontend_Developer.pdf';
-                link.click();
-              }}
+              onClick={handleDownload}
             >
               <Download className="mr-2 h-5 w-5" />
-              Descargar CV
+              {hero.downloadCta}
             </Button>
             <Button
               size="lg"
@@ -69,7 +67,7 @@ export default function Hero() {
               onClick={scrollToContact}
             >
               <Mail className="mr-2 h-5 w-5" />
-              Contáctame
+              {hero.contactCta}
             </Button>
           </div>
         </div>
@@ -81,7 +79,7 @@ export default function Hero() {
             <div className="relative w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden border-4 border-primary/30 shadow-card">
               <img
                 src={profileImage}
-                alt="Frontend Developer Profile"
+                alt={hero.profileAlt}
                 className="w-full h-full object-cover"
               />
             </div>

@@ -1,63 +1,19 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { FolderGit2, ExternalLink } from "lucide-react";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-
-const projects = [
-  {
-    id: 1,
-    title: "E-commerce Platform",
-    description: "Modern e-commerce with React & Tailwind",
-    image: "/project1.jpg",
-    tags: ["React", "Tailwind", "API"],
-    link: "#",
-  },
-  {
-    id: 2,
-    title: "Email Campaign Dashboard",
-    description: "Email marketing automation tool",
-    image: "/project2.jpg",
-    tags: ["HTML Email", "SFMC", "AMPscript"],
-    link: "#",
-  },
-  {
-    id: 3,
-    title: "Portfolio Website",
-    description: "Minimalist portfolio with animations",
-    image: "/project3.jpg",
-    tags: ["React", "Framer Motion", "CSS"],
-    link: "#",
-  },
-  {
-    id: 4,
-    title: "Task Management App",
-    description: "Productivity app with AI features",
-    image: "/project4.jpg",
-    tags: ["React", "Firebase", "AI"],
-    link: "#",
-  },
-  {
-    id: 5,
-    title: "Landing Page Generator",
-    description: "AI-powered landing page builder",
-    image: "/project5.jpg",
-    tags: ["Vue", "N8N", "AI"],
-    link: "#",
-  },
-  {
-    id: 6,
-    title: "Corporate Website",
-    description: "Responsive corporate site",
-    image: "/project6.jpg",
-    tags: ["HTML", "CSS", "JavaScript"],
-    link: "#",
-  },
-];
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function Projects() {
+  const { copy } = useLanguage();
+  const projects = copy.projects.cards;
   const [filter, setFilter] = useState("all");
-  const allTags = ["all", ...Array.from(new Set(projects.flatMap((p) => p.tags)))];
+
+  const allTags = useMemo(
+    () => ["all", ...Array.from(new Set(projects.flatMap((p) => p.tags)))],
+    [projects]
+  );
 
   const filteredProjects = filter === "all" 
     ? projects 
@@ -68,7 +24,7 @@ export default function Projects() {
       <div className="max-w-7xl w-full">
         <div className="flex items-center gap-3 mb-8">
           <FolderGit2 className="h-8 w-8 text-primary" />
-          <h2 className="text-4xl font-bold">Proyectos Destacados</h2>
+          <h2 className="text-4xl font-bold">{copy.projects.heading}</h2>
         </div>
 
         {/* Filter Tags */}
@@ -81,7 +37,7 @@ export default function Projects() {
               onClick={() => setFilter(tag)}
               className={filter === tag ? "bg-primary text-primary-foreground" : ""}
             >
-              {tag}
+              {tag === "all" ? copy.projects.filterAllLabel : tag}
             </Button>
           ))}
         </div>
@@ -104,9 +60,11 @@ export default function Projects() {
                   }}
                 />
                 <div className="absolute inset-0 bg-background/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                  <Button size="sm" className="bg-primary text-primary-foreground">
-                    <ExternalLink className="h-4 w-4 mr-2" />
-                    Ver Proyecto
+                  <Button asChild size="sm" className="bg-primary text-primary-foreground">
+                    <a href={project.link} target="_blank" rel="noopener noreferrer">
+                      <ExternalLink className="h-4 w-4 mr-2" />
+                      {copy.projects.viewLabel}
+                    </a>
                   </Button>
                 </div>
               </div>
@@ -127,7 +85,7 @@ export default function Projects() {
 
         <div className="text-center mt-12">
           <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90">
-            Ver más proyectos
+            {copy.projects.ctaLabel}
           </Button>
         </div>
       </div>
