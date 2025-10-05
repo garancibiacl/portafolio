@@ -1,10 +1,52 @@
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Download, Mail, Rocket } from "lucide-react";
 import profileImage from "@/assets/profile.png";
 
 const CV_FILE_NAME = "CV_Desarrollador_Frontend.pdf";
+const phrases = [
+  "Experiencias digitales memorables",
+  "Prototipos listos para producción",
+  "Componentes accesibles y escalables",
+];
 
 export default function Hero() {
+  const [phraseIndex, setPhraseIndex] = useState(0);
+  const [charIndex, setCharIndex] = useState(0);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [displayText, setDisplayText] = useState("");
+
+  useEffect(() => {
+    const currentPhrase = phrases[phraseIndex];
+    const typingSpeed = isDeleting ? 40 : 100;
+
+    const timeout = setTimeout(() => {
+      if (!isDeleting && charIndex < currentPhrase.length) {
+        setDisplayText((prev) => prev + currentPhrase[charIndex]);
+        setCharIndex((prev) => prev + 1);
+        return;
+      }
+
+      if (!isDeleting && charIndex === currentPhrase.length) {
+        setTimeout(() => setIsDeleting(true), 1200);
+        return;
+      }
+
+      if (isDeleting && charIndex > 0) {
+        setDisplayText((prev) => prev.slice(0, -1));
+        setCharIndex((prev) => prev - 1);
+        return;
+      }
+
+      if (isDeleting && charIndex === 0) {
+        setIsDeleting(false);
+        setPhraseIndex((prev) => (prev + 1) % phrases.length);
+      }
+    }, typingSpeed);
+
+    return () => clearTimeout(timeout);
+  }, [charIndex, isDeleting, phraseIndex]);
+
   const handleDownload = () => {
     const link = document.createElement("a");
     link.href = "/cv.pdf";
@@ -25,15 +67,28 @@ export default function Hero() {
         <div className="space-y-6 animate-fade-in">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary/50 border border-border">
             <Rocket className="h-4 w-4 text-primary animate-glow" />
-            <span className="text-sm text-muted-foreground">Disponible para nuevos proyectos</span>
+            <span className="text-sm text-muted-foreground">
+              Disponible para nuevos proyectos
+            </span>
           </div>
 
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
-            Diseñador y desarrollador frontend orientado a resultados.
-          </h1>
+          <div className="space-y-2">
+            <span className="block text-4xl md:text-5xl lg:text-6xl font-bold leading-tight bg-gradient-to-r from-primary via-emerald-300 to-lime-200 bg-clip-text text-transparent">
+              UI Specialist
+            </span>
+            <span className="block text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-foreground">
+              Dev Front-End
+            </span>
+          </div>
 
           <p className="text-lg text-muted-foreground max-w-xl">
-            Construyo interfaces limpias con React y Tailwind, y diseño emails efectivos que conectan con las personas.
+            Desarrollo interfaces enfocadas en performance y consistencia
+            visual, con procesos colaborativos que reducen tiempos de entrega.
+          </p>
+
+          <p className="font-mono text-base md:text-lg text-muted-foreground h-6">
+            {displayText}
+            <span className="ml-1 animate-pulse">|</span>
           </p>
 
           <div className="flex flex-wrap gap-4">
