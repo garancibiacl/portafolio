@@ -20,12 +20,12 @@ La información oficial del proyecto se encuentra en:
 ### 2. CALIDAD DEL CÓDIGO
 - Implementar soluciones limpias, eficientes y bien documentadas.
 - Seguir los estándares de código establecidos en las reglas.
+- Seguir alineamientos de estilos UI/UX establecidos en las reglas.
 
 ### 3. DOCUMENTACIÓN
 - Mantener actualizada la documentación del proyecto.
 
-
-### Stack Tecnológico
+### 4. STACK TECNOLÓGICO
 
 #### Frontend
 - **Framework:** React 18.3.1
@@ -126,6 +126,7 @@ La información oficial del proyecto se encuentra en:
 - El despliegue se gestiona actualmente con Lovable (consulta `README.md`). Si agregas logica dependiente del entorno, condiciona con variables de Vite (`import.meta.env`).
 - El sidebar y los botones CTA inician descargas creando anclas dinamicas; asegúrate de que `/public/cv.pdf` exista si mantienes esa experiencia.
 - Los enlaces externos (LinkedIn, GitHub, email) en `Contact.tsx` son placeholders; actualizalos con destinos reales antes del lanzamiento.
+- Envío de emails usa Resend a través de una función serverless de Netlify (`/.netlify/functions/send-email`). Define la variable de entorno `RESEND_API_KEY` antes de desplegar y utiliza `netlify dev` para pruebas locales.
 
 ## Solucion de problemas
 - Problemas de estilo: confirma que los tokens HSL en `src/index.css` coinciden con las expectativas de Tailwind; debes reiniciar Vite si modificas el propio archivo de configuracion.

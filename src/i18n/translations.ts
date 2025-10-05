@@ -106,36 +106,41 @@ export type Translation = {
     heading: string;
     items: CvItem[];
   };
-  contact: {
-    heading: string;
-    introTitle: string;
-    introDescription: string;
-    links: ContactLink[];
-    formTitle: string;
-    form: {
-      nameLabel: string;
-      namePlaceholder: string;
-      emailLabel: string;
-      emailPlaceholder: string;
-      messageLabel: string;
-      messagePlaceholder: string;
-      submit: string;
+    contact: {
+      heading: string;
+      introTitle: string;
+      introDescription: string;
+      links: ContactLink[];
+      formTitle: string;
+      form: {
+        nameLabel: string;
+        namePlaceholder: string;
+        emailLabel: string;
+        emailPlaceholder: string;
+        messageLabel: string;
+        messagePlaceholder: string;
+        submit: string;
+        submitting: string;
+      };
+      toast: {
+        missingFields: {
+          title: string;
+          description: string;
+        };
+        invalidEmail: {
+          title: string;
+          description: string;
+        };
+        success: {
+          title: string;
+          description: string;
+        };
+        error: {
+          title: string;
+          description: string;
+        };
+      };
     };
-    toast: {
-      missingFields: {
-        title: string;
-        description: string;
-      };
-      invalidEmail: {
-        title: string;
-        description: string;
-      };
-      success: {
-        title: string;
-        description: string;
-      };
-    };
-  };
   notFound: {
     title: string;
     description: string;
@@ -405,6 +410,7 @@ export const translations: Record<LanguageCode, Translation> = {
         messageLabel: "Mensaje",
         messagePlaceholder: "Tu mensaje",
         submit: "Enviar mensaje",
+        submitting: "Enviando...",
       },
       toast: {
         missingFields: {
@@ -418,6 +424,10 @@ export const translations: Record<LanguageCode, Translation> = {
         success: {
           title: "¡Mensaje enviado!",
           description: "Gracias por contactarme. Te responderé pronto.",
+        },
+        error: {
+          title: "Error",
+          description: "No se pudo enviar el mensaje. Intenta nuevamente en unos minutos.",
         },
       },
     },
@@ -681,6 +691,7 @@ export const translations: Record<LanguageCode, Translation> = {
         messageLabel: "Message",
         messagePlaceholder: "Your message",
         submit: "Send message",
+        submitting: "Sending...",
       },
       toast: {
         missingFields: {
@@ -694,6 +705,10 @@ export const translations: Record<LanguageCode, Translation> = {
         success: {
           title: "Message sent!",
           description: "Thanks for reaching out. I'll reply shortly.",
+        },
+        error: {
+          title: "Error",
+          description: "Message could not be sent. Please try again later.",
         },
       },
     },

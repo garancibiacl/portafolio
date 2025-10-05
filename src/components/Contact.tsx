@@ -22,10 +22,11 @@ export default function Contact() {
     email: "",
     message: "",
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!formData.name || !formData.email || !formData.message) {
       toast({
         title: contact.toast.missingFields.title,
@@ -45,12 +46,46 @@ export default function Contact() {
       return;
     }
 
-    toast({
-      title: contact.toast.success.title,
-      description: contact.toast.success.description,
-    });
+    try {
+      setIsSubmitting(true);
 
-    setFormData({ name: "", email: "", message: "" });
+      const response = await fetch("/.netlify/functions/send-email", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          message: formData.message,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorPayload = await response.json().catch(() => null);
+        const errorMessage = errorPayload?.error ?? "Failed to submit contact form";
+        throw new Error(errorPayload?.details ?? errorMessage);
+      }
+
+      toast({
+        title: contact.toast.success.title,
+        description: contact.toast.success.description,
+      });
+
+      setFormData({ name: "", email: "", message: "" });
+    } catch (error) {
+      console.error(error);
+      toast({
+        title: contact.toast.error.title,
+        description:
+          error instanceof Error && error.message
+            ? `${contact.toast.error.description}\n(${error.message})`
+            : contact.toast.error.description,
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -144,9 +179,10 @@ export default function Contact() {
                 <Button
                   type="submit"
                   size="lg"
-                  className="w-full bg-primary text-primary-foreground hover:bg-primary/90 shadow-glow"
+                  className="w-full bg-primary text-primary-foreground hover:bg-primary/90 shadow-glow disabled:opacity-70"
+                  disabled={isSubmitting}
                 >
-                  {contact.form.submit}
+                  {isSubmitting ? contact.form.submitting : contact.form.submit}
                 </Button>
               </form>
             </CardContent>
