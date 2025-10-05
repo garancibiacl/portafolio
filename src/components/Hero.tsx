@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Download, Mail, Rocket } from "lucide-react";
-import profileImage from "@/assets/profile.jpg";
+import profileImage from "@/assets/profile.png";
 
 const CV_FILE_NAME = "CV_Desarrollador_Frontend.pdf";
 
