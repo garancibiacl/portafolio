@@ -89,7 +89,7 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="min-h-screen flex items-center justify-center px-6 lg:px-12 py-20">
+    <section id="contact" className="min-h-screen flex items-center justify-center px-6 lg:px-12 py-20 bg-black/50">
       <div className="max-w-5xl w-full">
         <div className="flex items-center gap-3 mb-12">
           <Mail className="h-8 w-8 text-primary" />
