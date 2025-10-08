@@ -9,6 +9,8 @@ export default function Projects() {
   const { copy } = useLanguage();
   const projects = copy.projects.cards;
   const [filter, setFilter] = useState("all");
+  const [visibleProjects, setVisibleProjects] = useState(6); // Mostrar 6 proyectos inicialmente
+  const projectsPerLoad = 3; // Cargar 3 proyectos adicionales
 
   const allTags = useMemo(
     () => ["all", ...Array.from(new Set(projects.flatMap((p) => p.tags)))],
@@ -18,6 +20,9 @@ export default function Projects() {
   const filteredProjects = filter === "all" 
     ? projects 
     : projects.filter((p) => p.tags.includes(filter));
+    
+  const displayedProjects = filteredProjects.slice(0, visibleProjects);
+  const hasMoreProjects = visibleProjects < filteredProjects.length;
 
   return (
     <section id="projects" className="min-h-screen flex items-center justify-center px-6 lg:px-12 py-20">
@@ -44,7 +49,7 @@ export default function Projects() {
 
         {/* Projects Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredProjects.map((project, index) => (
+          {displayedProjects.map((project, index) => (
             <Card
               key={project.id}
               className="bg-card border-border overflow-hidden group hover:shadow-glow transition-all duration-300 animate-fade-in"
@@ -84,9 +89,18 @@ export default function Projects() {
         </div>
 
         <div className="text-center mt-12">
-          <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90">
-            {copy.projects.ctaLabel}
-          </Button>
+          {hasMoreProjects && (
+            <Button 
+              size="lg" 
+              className="bg-primary text-primary-foreground hover:bg-primary/90"
+              onClick={() => setVisibleProjects(prev => prev + projectsPerLoad)} // Mostrar 3 proyectos más
+            >
+              {copy.projects.ctaLabel}
+            </Button>
+          )}
+          {filteredProjects.length === 0 && (
+            <p className="text-muted-foreground">No se encontraron proyectos con el filtro seleccionado.</p>
+          )}
         </div>
       </div>
     </section>
