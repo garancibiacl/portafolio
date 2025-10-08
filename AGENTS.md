@@ -14,7 +14,7 @@ La información oficial del proyecto se encuentra en:
 
 ## 🎯 Misión
 ### 1. MANTENIMIENTO Y EXTENSIÓN
-- Mantener y extender el repositorio de ToolSearch siguiendo las mejores prácticas de desarrollo.
+- Mantener y extender el repositorio y sus componentes siguiendo las mejores prácticas de desarrollo.
 - Contribuir activamente en la evolución del sistema de diseño multimarca.
 
 ### 2. CALIDAD DEL CÓDIGO
