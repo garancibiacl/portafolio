@@ -24,48 +24,34 @@ export default function Contact() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const form = e.currentTarget;
 
-    if (!formData.name || !formData.email || !formData.message) {
-      toast({
-        title: contact.toast.missingFields.title,
-        description: contact.toast.missingFields.description,
-        variant: "destructive",
-      });
-      return;
-    }
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(formData.email)) {
-      toast({
-        title: contact.toast.invalidEmail.title,
-        description: contact.toast.invalidEmail.description,
-        variant: "destructive",
-      });
+    if (!form.checkValidity()) {
+      form.reportValidity();
       return;
     }
 
     try {
       setIsSubmitting(true);
 
-      const response = await fetch("/.netlify/functions/send-email", {
+      const formPayload = new FormData();
+      formPayload.append("name", formData.name);
+      formPayload.append("email", formData.email);
+      formPayload.append("message", formData.message);
+      formPayload.append("_captcha", "false");
+
+      const response = await fetch("https://formsubmit.co/ajax/garancibiacl@gmail.com", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          message: formData.message,
-        }),
+        body: formPayload,
       });
 
       if (!response.ok) {
-        const errorPayload = await response.json().catch(() => null);
-        const errorMessage = errorPayload?.error ?? "Failed to submit contact form";
-        throw new Error(errorPayload?.details ?? errorMessage);
+        throw new Error("No se pudo enviar el formulario de contacto");
       }
+
+      await response.json().catch(() => null);
 
       toast({
         title: contact.toast.success.title,
@@ -73,14 +59,12 @@ export default function Contact() {
       });
 
       setFormData({ name: "", email: "", message: "" });
+      form.reset();
     } catch (error) {
       console.error(error);
       toast({
         title: contact.toast.error.title,
-        description:
-          error instanceof Error && error.message
-            ? `${contact.toast.error.description}\n(${error.message})`
-            : contact.toast.error.description,
+        description: contact.toast.error.description,
         variant: "destructive",
       });
     } finally {
@@ -144,6 +128,7 @@ export default function Contact() {
                     placeholder={contact.form.namePlaceholder}
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    required
                     className="bg-secondary border-border"
                   />
                 </div>
@@ -158,6 +143,7 @@ export default function Contact() {
                     placeholder={contact.form.emailPlaceholder}
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    required
                     className="bg-secondary border-border"
                   />
                 </div>
@@ -172,6 +158,7 @@ export default function Contact() {
                     rows={6}
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                    required
                     className="bg-secondary border-border resize-none"
                   />
                 </div>
