@@ -59,6 +59,10 @@ export type Translation = {
   languageSelectorLabel: string;
   languageSelectorAria: string;
   downloadFileName: string;
+  footer?: {
+    copyright: string;
+    madeWith: string;
+  };
   sidebar: {
     brand: string;
     toggleSidebarAria: string;
@@ -161,8 +165,12 @@ export const translations: Record<LanguageCode, Translation> = {
     languageSelectorLabel: "Idioma",
     languageSelectorAria: "Cambiar idioma",
     downloadFileName: "CV_Desarrollador_Frontend.pdf",
+    footer: {
+      copyright: "© 2025 Todos los derechos reservados",
+      madeWith: "Hecho con ❤️ y dedicación"
+    },
     sidebar: {
-      brand: "VibeCoding",
+      brand: "DevFolio",
       toggleSidebarAria: "Alternar barra lateral",
       mobileMenuAria: {
         open: "Abrir menú",
@@ -466,8 +474,12 @@ export const translations: Record<LanguageCode, Translation> = {
     languageSelectorLabel: "Language",
     languageSelectorAria: "Change language",
     downloadFileName: "Frontend_Developer_CV.pdf",
+    footer: {
+      copyright: "© 2025 All rights reserved",
+      madeWith: "Made with ❤️ and dedication"
+    },
     sidebar: {
-      brand: "VibeCoding",
+      brand: "DevFolio",
       toggleSidebarAria: "Toggle sidebar",
       mobileMenuAria: {
         open: "Open menu",

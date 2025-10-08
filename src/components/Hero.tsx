@@ -102,8 +102,8 @@ export default function Hero() {
             </Button>
             <Button
               size="lg"
-              variant="outline"
-              className="border-primary text-primary hover:bg-primary/10"
+              variant="default"
+              className="bg-background text-foreground border-2 border-primary hover:bg-primary/90 hover:text-primary-foreground transition-all duration-300 shadow-md hover:shadow-primary/30"
               onClick={scrollToContact}
             >
               <Mail className="mr-2 h-5 w-5" />
