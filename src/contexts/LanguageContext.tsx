@@ -14,53 +14,60 @@ const STORAGE_KEY = "portafolio-language";
 
 // Función para detectar el idioma del navegador
 const getBrowserLanguage = (): LanguageCode => {
-  if (typeof navigator === 'undefined') return 'es';
+  // Verificar si estamos en el servidor
+  if (typeof window === 'undefined') return 'es';
   
-  const browserLang = navigator.language || (navigator as any).userLanguage;
+  // Obtener el idioma del navegador
+  const browserLang = navigator.language || (navigator as any).userLanguage || 'es';
+  
+  // Verificar si el idioma es español o inglés
   if (browserLang.startsWith('es')) return 'es';
   if (browserLang.startsWith('en')) return 'en';
   
-  return 'es'; // Idioma por defecto
+  // Idioma por defecto
+  return 'es';
 };
 
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
   const [language, setLanguageState] = useState<LanguageCode>('es');
   const [isInitialized, setIsInitialized] = useState(false);
 
-  // Efecto para inicializar el idioma
+  // Efecto para inicializar el idioma (solo se ejecuta una vez al montar)
   useEffect(() => {
-    if (typeof window === 'undefined') return;
-
     // 1. Verificar si hay un idioma guardado en localStorage
-    const savedLanguage = window.localStorage.getItem(STORAGE_KEY) as LanguageCode | null;
+    const savedLanguage = localStorage.getItem(STORAGE_KEY) as LanguageCode | null;
     
     if (savedLanguage && (savedLanguage === 'es' || savedLanguage === 'en')) {
+      // Usar el idioma guardado
       setLanguageState(savedLanguage);
+      document.documentElement.lang = savedLanguage;
     } else {
       // 2. Si no hay idioma guardado, detectar el idioma del navegador
       const browserLanguage = getBrowserLanguage();
       setLanguageState(browserLanguage);
+      document.documentElement.lang = browserLanguage;
       // Guardar el idioma detectado
-      window.localStorage.setItem(STORAGE_KEY, browserLanguage);
+      localStorage.setItem(STORAGE_KEY, browserLanguage);
     }
     
-    // 3. Configurar el idioma en el documento HTML
-    document.documentElement.lang = language;
     setIsInitialized(true);
-  }, [language]);
+    
+    // Limpieza opcional si es necesario
+    return () => {
+      // Código de limpieza si es necesario
+    };
+  }, []); // Array de dependencias vacío para que solo se ejecute una vez
 
   // Efecto para actualizar el idioma en localStorage cuando cambia
   useEffect(() => {
     if (!isInitialized) return;
     
-    if (typeof window !== 'undefined') {
-      window.localStorage.setItem(STORAGE_KEY, language);
-      document.documentElement.lang = language;
-    }
+    localStorage.setItem(STORAGE_KEY, language);
+    document.documentElement.lang = language;
   }, [language, isInitialized]);
 
-  const setLanguage = useCallback((value: LanguageCode) => {
-    setLanguageState(value);
+  const setLanguage = useCallback((newLanguage: LanguageCode) => {
+    setLanguageState(newLanguage);
   }, []);
 
   const value = useMemo<LanguageContextValue>(() => ({
