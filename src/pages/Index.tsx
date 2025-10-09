@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Sidebar from "@/components/Sidebar";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
@@ -9,10 +10,15 @@ import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 
 export default function Index() {
+  const [isCollapsed, setIsCollapsed] = useState(false);
+  const mainClassName = isCollapsed
+    ? "flex-1 transition-all duration-300 lg:ml-16"
+    : "flex-1 transition-all duration-300 lg:ml-64";
+
   return (
     <div className="flex min-h-screen w-full bg-background text-foreground">
-      <Sidebar />
-      <main className="flex-1 lg:ml-64 transition-all duration-300">
+      <Sidebar isCollapsed={isCollapsed} onToggleCollapse={() => setIsCollapsed((prev) => !prev)} />
+      <main className={mainClassName}>
         <Hero />
         <About />
         <Skills />

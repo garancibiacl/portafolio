@@ -15,9 +15,13 @@ const iconMap = {
   contact: Mail,
 } as const;
 
-export default function Sidebar() {
+type SidebarProps = {
+  isCollapsed: boolean;
+  onToggleCollapse: () => void;
+};
+
+export default function Sidebar({ isCollapsed, onToggleCollapse }: SidebarProps) {
   const { copy, language, setLanguage, options } = useLanguage();
-  const [isCollapsed, setIsCollapsed] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("hero");
   const navItems = copy.sidebar.navItems;
@@ -104,7 +108,7 @@ export default function Sidebar() {
               variant="ghost"
               size="icon"
               className="hidden lg:flex h-8 w-8"
-              onClick={() => setIsCollapsed(!isCollapsed)}
+              onClick={onToggleCollapse}
               aria-label={copy.sidebar.toggleSidebarAria}
             >
               <Menu className="h-4 w-4" />

@@ -243,7 +243,7 @@ export const translations: Record<LanguageCode, Translation> = {
       role: "Desarrollador Frontend y Especialista en Email HTML",
       quote: "Código rápido, lanzamientos ágiles. La perfección es enemiga del progreso.",
       intro:
-        "Soy un desarrollador frontend especializado en React, JavaScript, Tailwind CSS y Email HTML. Como Vibe Coder, priorizo la velocidad sobre la perfección, usando herramientas como Windsurf, Lovable y N8N para lanzar MVPs funcionales en cuestión de horas.",
+        "Comprometido con la innovación ágil, la automatización con IA y el desarrollo de interfaces modernas que combinan velocidad + impacto real.",
       highlights: [
         {
           icon: "code",

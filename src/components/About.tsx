@@ -140,8 +140,7 @@ export default function About() {
                     Desarrollador Frontend y Especialista en Email HTML
                   </p>
                   <p className="text-sm text-muted-foreground italic">
-                    "Código rápido, lanzamientos ágiles. La perfección es
-                    enemiga del progreso."
+                    "Código rápido, lanzamientos ágiles."
                   </p>
                 </div>
               </CardContent>
@@ -162,8 +161,7 @@ export default function About() {
             >
               <CardContent className="p-6">
                 <p className="text-foreground">
-                  {copy.about.intro ||
-                    "Soy un desarrollador frontend especializado en React, JavaScript, Tailwind CSS y Email HTML. Como Vibe Coder, priorizo la velocidad sobre la perfección, usando herramientas modernas para lanzar MVPs funcionales en cuestión de horas."}
+                Soy Gustavo, mi habilidad principal radica en HTML y CSS, herramientas con las que diseño interfaces claras, estructuradas y fáciles de navegar. Soy un desarrollador frontend especializado en React, JavaScript, Tailwind CSS y Email HTML. Como Vibe Coder, priorizo la velocidad sobre la perfección, usando herramientas modernas para lanzar MVPs funcionales en cuestión de horas y acompañar al equipo en todo el proceso.
                 </p>
               </CardContent>
             </Card>
