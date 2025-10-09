@@ -125,7 +125,7 @@ export default function About() {
               <CardContent className="p-6 text-center space-y-4">
                 <div className="w-32 h-32 mx-auto rounded-full overflow-hidden border-4 border-primary/30">
                   <img
-                    src="/images/profile-about.png"
+                    src="/images/profile-about-v1.png"
                     alt="Gustavo Arancibia"
                     className="w-full h-full object-cover"
                     onError={(e) => {
