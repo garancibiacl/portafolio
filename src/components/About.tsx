@@ -113,18 +113,19 @@ export default function About() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
           {/* Tarjeta de perfil - Columna izquierda */}
           <div className="lg:col-span-4">
-            <Card 
+            <Card
               className="bg-card border-border shadow-card h-full"
               style={{
                 opacity: isVisible ? 1 : 0,
                 transform: isVisible ? "translateY(0)" : "translateY(30px)",
-                transition: "opacity 0.6s ease-out 0.2s, transform 0.6s ease-out 0.2s"
+                transition:
+                  "opacity 0.6s ease-out 0.2s, transform 0.6s ease-out 0.2s",
               }}
             >
               <CardContent className="p-6 text-center space-y-4">
                 <div className="w-32 h-32 mx-auto rounded-full overflow-hidden border-4 border-primary/30">
                   <img
-                    src="/profile-about.jpg"
+                    src="/images/profile-about.png"
                     alt="Gustavo Arancibia"
                     className="w-full h-full object-cover"
                     onError={(e) => {
@@ -139,7 +140,8 @@ export default function About() {
                     Desarrollador Frontend y Especialista en Email HTML
                   </p>
                   <p className="text-sm text-muted-foreground italic">
-                    "Código rápido, lanzamientos ágiles. La perfección es enemiga del progreso."
+                    "Código rápido, lanzamientos ágiles. La perfección es
+                    enemiga del progreso."
                   </p>
                 </div>
               </CardContent>
@@ -149,12 +151,13 @@ export default function About() {
           {/* Columna derecha - Descripción y habilidades */}
           <div className="lg:col-span-8 space-y-6">
             {/* Sección de descripción */}
-            <Card 
+            <Card
               className="bg-card border-border shadow-card"
               style={{
                 opacity: isVisible ? 1 : 0,
                 transform: isVisible ? "translateY(0)" : "translateY(30px)",
-                transition: "opacity 0.6s ease-out 0.3s, transform 0.6s ease-out 0.3s"
+                transition:
+                  "opacity 0.6s ease-out 0.3s, transform 0.6s ease-out 0.3s",
               }}
             >
               <CardContent className="p-6">
