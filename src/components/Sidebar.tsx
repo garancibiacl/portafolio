@@ -1,9 +1,22 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect } from "react";
 import { Home, User, Code, Briefcase, FolderGit2, FileText, Mail, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { useLanguage } from "@/contexts/LanguageContext";
-import type { LanguageCode } from "@/i18n/translations";
+
+type SidebarProps = {
+  isCollapsed: boolean;
+  onToggleCollapse: () => void;
+};
+
+const navItems = [
+  { id: "hero", label: "Inicio" },
+  { id: "about", label: "Sobre mí" },
+  { id: "skills", label: "Habilidades" },
+  { id: "services", label: "Servicios" },
+  { id: "projects", label: "Proyectos" },
+  { id: "cv", label: "CV" },
+  { id: "contact", label: "Contacto" },
+];
 
 const iconMap = {
   hero: Home,
@@ -15,21 +28,9 @@ const iconMap = {
   contact: Mail,
 } as const;
 
-type SidebarProps = {
-  isCollapsed: boolean;
-  onToggleCollapse: () => void;
-};
-
 export default function Sidebar({ isCollapsed, onToggleCollapse }: SidebarProps) {
-  const { copy, language, setLanguage, options } = useLanguage();
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("hero");
-  const navItems = copy.sidebar.navItems;
-
-  const numberedOptions = useMemo(
-    () => options.map((option, index) => ({ ...option, label: `${index + 1}. ${option.label}` })),
-    [options]
-  );
 
   useEffect(() => {
     const handleScroll = () => {
@@ -47,12 +48,12 @@ export default function Sidebar({ isCollapsed, onToggleCollapse }: SidebarProps)
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [navItems]);
+  }, []);
 
   const handleDownload = () => {
     const link = document.createElement("a");
     link.href = "/cv.pdf";
-    link.download = copy.downloadFileName;
+    link.download = "CV_Frontend_Developer.pdf";
     link.click();
   };
 
@@ -66,18 +67,16 @@ export default function Sidebar({ isCollapsed, onToggleCollapse }: SidebarProps)
 
   return (
     <>
-      {/* Mobile Menu Button */}
       <Button
         variant="ghost"
         size="icon"
         className="fixed top-4 left-4 z-50 lg:hidden bg-sidebar border border-sidebar-border"
         onClick={() => setIsMobileOpen(!isMobileOpen)}
-        aria-label={isMobileOpen ? copy.sidebar.mobileMenuAria.close : copy.sidebar.mobileMenuAria.open}
+        aria-label={isMobileOpen ? "Cerrar menú" : "Abrir menú"}
       >
         {isMobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
       </Button>
 
-      {/* Mobile Overlay */}
       {isMobileOpen && (
         <div
           className="fixed inset-0 bg-background/80 backdrop-blur-sm z-40 lg:hidden"
@@ -85,7 +84,6 @@ export default function Sidebar({ isCollapsed, onToggleCollapse }: SidebarProps)
         />
       )}
 
-      {/* Sidebar */}
       <aside
         className={cn(
           "fixed left-0 top-0 h-screen bg-sidebar border-r border-sidebar-border z-40 transition-all duration-300",
@@ -94,14 +92,13 @@ export default function Sidebar({ isCollapsed, onToggleCollapse }: SidebarProps)
         )}
       >
         <div className="flex flex-col h-full p-4">
-          {/* Logo/Brand */}
           <div className="flex items-center justify-between mb-8">
             {!isCollapsed && (
               <div className="flex items-center gap-2 animate-fade-in">
                 <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
                   <Code className="h-5 w-5 text-primary-foreground" />
                 </div>
-                <span className="font-bold text-lg text-foreground">{copy.sidebar.brand}</span>
+                <span className="font-bold text-lg text-foreground">VibeCoding</span>
               </div>
             )}
             <Button
@@ -109,34 +106,12 @@ export default function Sidebar({ isCollapsed, onToggleCollapse }: SidebarProps)
               size="icon"
               className="hidden lg:flex h-8 w-8"
               onClick={onToggleCollapse}
-              aria-label={copy.sidebar.toggleSidebarAria}
+              aria-label="Alternar barra lateral"
             >
               <Menu className="h-4 w-4" />
             </Button>
           </div>
 
-          {!isCollapsed && (
-            <div className="mb-6">
-              <label htmlFor="language" className="block text-xs uppercase tracking-wide text-muted-foreground mb-2">
-                {copy.languageSelectorLabel}
-              </label>
-              <select
-                id="language"
-                value={language}
-                onChange={(event) => setLanguage(event.target.value as LanguageCode)}
-                aria-label={copy.languageSelectorAria}
-                className="w-full rounded-md border border-sidebar-border bg-sidebar px-3 py-2 text-sm text-sidebar-foreground focus:outline-none focus:ring-2 focus:ring-ring"
-              >
-                {numberedOptions.map((option) => (
-                  <option key={option.value} value={option.value}>
-                    {option.label}
-                  </option>
-                ))}
-              </select>
-            </div>
-          )}
-
-          {/* Navigation */}
           <nav className="flex-1 space-y-2">
             {navItems.map((item) => {
               const Icon = iconMap[item.id as keyof typeof iconMap] ?? FileText;
@@ -162,7 +137,6 @@ export default function Sidebar({ isCollapsed, onToggleCollapse }: SidebarProps)
             })}
           </nav>
 
-          {/* CTA Button */}
           <Button
             className={cn(
               "w-full mt-4 bg-primary text-primary-foreground hover:bg-primary/90",
@@ -171,7 +145,7 @@ export default function Sidebar({ isCollapsed, onToggleCollapse }: SidebarProps)
             onClick={handleDownload}
           >
             <FileText className="h-4 w-4" />
-            {!isCollapsed && <span className="ml-2">{copy.sidebar.downloadCta}</span>}
+            {!isCollapsed && <span className="ml-2">Descargar CV</span>}
           </Button>
         </div>
       </aside>

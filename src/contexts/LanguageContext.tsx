@@ -12,41 +12,63 @@ const LanguageContext = createContext<LanguageContextValue | undefined>(undefine
 
 const STORAGE_KEY = "portafolio-language";
 
+// Función para detectar el idioma del navegador
+const getBrowserLanguage = (): LanguageCode => {
+  if (typeof navigator === 'undefined') return 'es';
+  
+  const browserLang = navigator.language || (navigator as any).userLanguage;
+  if (browserLang.startsWith('es')) return 'es';
+  if (browserLang.startsWith('en')) return 'en';
+  
+  return 'es'; // Idioma por defecto
+};
+
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
-  const [language, setLanguageState] = useState<LanguageCode>(() => {
-    if (typeof window === "undefined") {
-      return "es";
-    }
+  const [language, setLanguageState] = useState<LanguageCode>('es');
+  const [isInitialized, setIsInitialized] = useState(false);
 
-    const stored = window.localStorage.getItem(STORAGE_KEY) as LanguageCode | null;
-    if (stored === "en" || stored === "es") {
-      return stored;
-    }
-
-    return "es";
-  });
-
+  // Efecto para inicializar el idioma
   useEffect(() => {
-    if (typeof window === "undefined") {
-      return;
-    }
+    if (typeof window === 'undefined') return;
 
-    window.localStorage.setItem(STORAGE_KEY, language);
+    // 1. Verificar si hay un idioma guardado en localStorage
+    const savedLanguage = window.localStorage.getItem(STORAGE_KEY) as LanguageCode | null;
+    
+    if (savedLanguage && (savedLanguage === 'es' || savedLanguage === 'en')) {
+      setLanguageState(savedLanguage);
+    } else {
+      // 2. Si no hay idioma guardado, detectar el idioma del navegador
+      const browserLanguage = getBrowserLanguage();
+      setLanguageState(browserLanguage);
+      // Guardar el idioma detectado
+      window.localStorage.setItem(STORAGE_KEY, browserLanguage);
+    }
+    
+    // 3. Configurar el idioma en el documento HTML
     document.documentElement.lang = language;
+    setIsInitialized(true);
   }, [language]);
+
+  // Efecto para actualizar el idioma en localStorage cuando cambia
+  useEffect(() => {
+    if (!isInitialized) return;
+    
+    if (typeof window !== 'undefined') {
+      window.localStorage.setItem(STORAGE_KEY, language);
+      document.documentElement.lang = language;
+    }
+  }, [language, isInitialized]);
 
   const setLanguage = useCallback((value: LanguageCode) => {
     setLanguageState(value);
   }, []);
 
-  const value = useMemo<LanguageContextValue>(() => {
-    return {
-      language,
-      setLanguage,
-      copy: translations[language],
-      options: languageOptions,
-    };
-  }, [language, setLanguage]);
+  const value = useMemo<LanguageContextValue>(() => ({
+    language,
+    setLanguage,
+    copy: translations[language],
+    options: languageOptions,
+  }), [language, setLanguage]);
 
   return <LanguageContext.Provider value={value}>{children}</LanguageContext.Provider>;
 }
