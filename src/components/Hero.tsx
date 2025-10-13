@@ -113,13 +113,32 @@ export default function Hero() {
         </div>
 
         <div className="flex justify-center lg:justify-end animate-fade-in">
-          <div className="relative">
-            <div className="absolute inset-0 bg-primary rounded-full blur-3xl opacity-20 animate-glow" />
-            <div className="relative w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden border-4 border-primary/30 shadow-card">
-              <img
-                src={profileImage}
-                alt="Retrato profesional"
-                className="w-full h-full object-cover"
+          <div className="group relative">
+            <div className="absolute inset-0 rounded-full bg-primary/40 blur-3xl opacity-30 transition-all duration-500 group-hover:opacity-60 group-hover:blur-[80px]" />
+
+            <div className="relative w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96">
+              <div className="absolute -inset-[6px] rounded-full opacity-0 transition-all duration-500 group-hover:opacity-100 group-hover:animate-border-gradient bg-[length:200%_200%] bg-[linear-gradient(120deg,hsl(var(--primary))_0%,#34d399_35%,#38bdf8_70%,#facc15_100%)]" aria-hidden="true" />
+              <div className="absolute inset-0 rounded-full border border-primary/30 transition-colors duration-500 group-hover:border-transparent" aria-hidden="true" />
+
+              <div className="relative w-full h-full rounded-full overflow-hidden shadow-card transition-all duration-500 group-hover:shadow-[0_0_40px_rgba(14,165,233,0.45)] group-hover:shadow-primary/30">
+                <img
+                  src={profileImage}
+                  alt="Retrato profesional"
+                  className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105 group-hover:brightness-110"
+                />
+              </div>
+
+              <span
+                className="pointer-events-none absolute left-10 top-4 h-2 w-2 rounded-full bg-emerald-300 opacity-0 blur-[1px] transition-opacity duration-300 group-hover:opacity-100 group-hover:animate-particle-float-1"
+                aria-hidden="true"
+              />
+              <span
+                className="pointer-events-none absolute right-12 top-6 h-1.5 w-1.5 rounded-full bg-sky-300 opacity-0 blur-[0.5px] transition-opacity duration-300 group-hover:opacity-100 group-hover:animate-particle-float-2"
+                aria-hidden="true"
+              />
+              <span
+                className="pointer-events-none absolute left-1/2 bottom-6 h-2 w-2 -translate-x-1/2 rounded-full bg-lime-300 opacity-0 blur-[1px] transition-opacity duration-300 group-hover:opacity-100 group-hover:animate-particle-float-3"
+                aria-hidden="true"
               />
             </div>
           </div>
