@@ -105,6 +105,9 @@ const ProjectCard = ({ project, index, isVisible, filter, onFilterChange }: Proj
 export default function Projects() {
   const { copy } = useLanguage();
   const projects = copy.projects.cards;
+  const sortedProjects = useMemo(() => {
+    return [...projects].sort((a: any, b: any) => (b.id ?? 0) - (a.id ?? 0));
+  }, [projects]);
   const [filter, setFilter] = useState("all");
   const [visibleProjects, setVisibleProjects] = useState(6);
   const projectsPerLoad = 3;
@@ -129,13 +132,13 @@ export default function Projects() {
     }
   }, [filter]);
   const allTags = useMemo(
-    () => ["all", ...Array.from(new Set(projects.flatMap((p) => p.tags)))],
-    [projects]
+    () => ["all", ...Array.from(new Set(sortedProjects.flatMap((p) => p.tags)))],
+    [sortedProjects]
   );
 
   const filteredProjects = useMemo(
-    () => filter === "all" ? projects : projects.filter((p) => p.tags.includes(filter)),
-    [filter, projects]
+    () => filter === "all" ? sortedProjects : sortedProjects.filter((p) => p.tags.includes(filter)),
+    [filter, sortedProjects]
   );
 
   const displayedProjects = useMemo(
