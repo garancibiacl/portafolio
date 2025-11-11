@@ -1,4 +1,4 @@
-import { FileText, Code, Mail, Palette, ArrowRight } from "lucide-react";
+import { FileText, Code, Mail, Palette, ArrowRight, Hammer } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useEffect, useRef, useState } from "react";
@@ -8,6 +8,7 @@ import { motion, AnimatePresence } from "framer-motion";
 const iconMap = {
   code: Code,
   mail: Mail,
+  tool: Hammer,
   palette: Palette,
 } as const;
 

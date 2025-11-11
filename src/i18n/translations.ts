@@ -31,7 +31,7 @@ type HeroHeadingLine = {
 };
 
 type CvItem = {
-  icon: "code" | "mail" | "palette";
+  icon: "code" | "mail" | "tool";
   title: string;
   subtitle: string;
   description: string;
@@ -166,7 +166,7 @@ export const translations: Record<LanguageCode, Translation> = {
     languageSelectorAria: "Cambiar idioma",
     downloadFileName: "CV_Desarrollador_Frontend.pdf",
     footer: {
-      copyright: "© 2025 Todos los derechos reservados",
+      copyright: "© 2025 -2026 GufacStudio - Todos los derechos reservados",
       madeWith: "Hecho con ❤️ y dedicación"
     },
     sidebar: {
@@ -295,19 +295,19 @@ export const translations: Record<LanguageCode, Translation> = {
         {
           icon: "code",
           title: "Desarrollo Frontend Moderno",
-          description: "React, Tailwind, Vue",
+          description: "React, Tailwind, Vite",
           details: "Aplicaciones web responsivas con las últimas tecnologías y mejores prácticas.",
         },
         {
           icon: "mail",
-          title: "Especialista en Email HTML ✉️",
+          title: "Especialista en Email HTML",
           description: "Campañas optimizadas, responsive, AMPscript",
           details: "Diseño emails profesionales compatibles con todos los clientes de correo.",
         },
         {
           icon: "zap",
-          title: "Automatización con IA 🤖",
-          description: "N8N, Vibe Coding, MVPs rápidos",
+          title: "Diseño y desarrollo impulsado por la IA 🤖",
+          description: "Vibe Coding, OpenIA, Lovable, Windsurf y MVPs rápidos",
           details: "Automatizo procesos y desarrollo prototipos funcionales con velocidad.",
         },
         {
@@ -427,26 +427,27 @@ export const translations: Record<LanguageCode, Translation> = {
     cv: {
       heading: "Resumen CV",
       items: [
-        {
-          icon: "code",
-          title: "🚀 Desarrollador Frontend – Proyectos Vibe Coding",
-          subtitle: "React, Tailwind, Email HTML",
-          description:
-            "Desarrollé aplicaciones web responsivas priorizando rendimiento y UX. Creé y optimicé plantillas de correo electrónico para campañas diversas.",
-        },
+       {
+  icon: "code",
+  title: "🚀 Desarrollador Frontend – GufacStudio & Freelance ",
+  subtitle: "React, Tailwind, HTML, CSS, JavaScript, shadcn/ui, PostgreSQL",
+  description:
+    "Actualmente enfocado 100% en el desarrollo de aplicaciones web modernas, sitios web, landing pages, e-commerce y diseño de logotipos. Como profesional independiente y freelance, desarrollo interfaces funcionales, visualmente atractivas y optimizadas para rendimiento, combinando eficiencia técnica y una comunicación cercana con cada cliente.",
+},
+
         {
           icon: "mail",
-          title: "📧 Especialista Email HTML – EMKT & Salesforce Marketing Cloud",
-          subtitle: "Salesforce Marketing Cloud, AMPscript",
+          title: "📧 Agencia La Miel - Sodimac",
+          subtitle: "Especialista Email HTML – EMKT & Salesforce Marketing Cloud",
           description:
-            "Gestioné campañas con Salesforce Marketing Cloud, enfocándome en la entregabilidad y el engagement de los correos HTML.",
+            "Responsable de la maquetación de campañas de Email Marketing en HTML/CSS responsivo para el cliente Sodimac, utilizando la plataforma CRM Salesforce Marketing Cloud. Coordinación directa con los equipos de diseño y supervisores para interpretar briefs, asegurar la precisión y calidad de las entregas bajo plazos ajustados.",
         },
         {
-          icon: "palette",
-          title: "🎨 Diseñador Web – ConectaDeco & Freelance",
-          subtitle: "Figma, Adobe XD, WordPress",
+          icon: "tool",
+          title: " Constructora DLB Ltda",
+          subtitle: "Desarrollador de Frontend - Angular",
           description:
-            "Diseñé y desarrollé sitios web combinando estética y funcionalidad para clientes diversos.",
+            "Desarrollo y mantenimiento de vistas y componentes dinámicos para aplicaciones web en Angular, enfocadas a la gestión de proyectos, control operativo y visualización de datos. Colaboración con equipos de diseño (UX/UI) y Back-End para la integración de API e implementación de interfaces funcionales.",
         },
       ],
     },

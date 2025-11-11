@@ -98,7 +98,7 @@ export default function Sidebar({ isCollapsed, onToggleCollapse }: SidebarProps)
                 <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
                   <Code className="h-5 w-5 text-primary-foreground" />
                 </div>
-                <span className="font-bold text-lg text-foreground">VibeCoding</span>
+                <span className="font-bold text-lg text-foreground">GufacStudio</span>
               </div>
             )}
             <Button

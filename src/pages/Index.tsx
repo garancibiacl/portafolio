@@ -8,6 +8,7 @@ import Projects from "@/components/Projects";
 import CV from "@/components/CV";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
+import WhatsAppButton from "@/components/WhatsAppButton";
 
 export default function Index() {
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -28,6 +29,7 @@ export default function Index() {
         <Contact />
         <Footer />
       </main>
+      <WhatsAppButton />
     </div>
   );
 }
