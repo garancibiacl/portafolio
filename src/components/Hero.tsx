@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Download, Mail, Rocket } from "lucide-react";
 import profileImage from "@/assets/profile.png";
+import cvPdf from "@/assets/document/Cv-Gustavo-Arancibia.pdf";
+import { useToast } from "@/hooks/use-toast";
 
 const CV_FILE_NAME = "CV_Desarrollador_Frontend.pdf";
 const phrases = [
@@ -11,6 +13,7 @@ const phrases = [
 ];
 
 export default function Hero() {
+  const { toast } = useToast();
   const [phraseIndex, setPhraseIndex] = useState(0);
   const [charIndex, setCharIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -49,9 +52,15 @@ export default function Hero() {
 
   const handleDownload = () => {
     const link = document.createElement("a");
-    link.href = "/cv.pdf";
+    link.href = cvPdf;
     link.download = CV_FILE_NAME;
     link.click();
+
+    toast({
+      title: "Descarga completada",
+      description:
+        "Tu CV se ha descargado correctamente. ¡Gracias por tu interés en mi trabajo!",
+    });
   };
 
   const scrollToContact = () => {
@@ -117,8 +126,14 @@ export default function Hero() {
             <div className="absolute inset-0 rounded-full bg-primary/40 blur-3xl opacity-30 transition-all duration-500 group-hover:opacity-60 group-hover:blur-[80px]" />
 
             <div className="relative w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96">
-              <div className="absolute -inset-[6px] rounded-full opacity-0 transition-all duration-500 group-hover:opacity-100 group-hover:animate-border-gradient bg-[length:200%_200%] bg-[linear-gradient(120deg,hsl(var(--primary))_0%,#34d399_35%,#38bdf8_70%,#facc15_100%)]" aria-hidden="true" />
-              <div className="absolute inset-0 rounded-full border border-primary/30 transition-colors duration-500 group-hover:border-transparent" aria-hidden="true" />
+              <div
+                className="absolute -inset-[6px] rounded-full opacity-0 transition-all duration-500 group-hover:opacity-100 group-hover:animate-border-gradient bg-[length:200%_200%] bg-[linear-gradient(120deg,hsl(var(--primary))_0%,#34d399_35%,#38bdf8_70%,#facc15_100%)]"
+                aria-hidden="true"
+              />
+              <div
+                className="absolute inset-0 rounded-full border border-primary/30 transition-colors duration-500 group-hover:border-transparent"
+                aria-hidden="true"
+              />
 
               <div className="relative w-full h-full rounded-full overflow-hidden shadow-card transition-all duration-500 group-hover:shadow-[0_0_40px_rgba(14,165,233,0.45)] group-hover:shadow-primary/30">
                 <img

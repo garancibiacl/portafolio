@@ -1,7 +1,19 @@
 import { useState, useEffect } from "react";
-import { Home, User, Code, Briefcase, FolderGit2, FileText, Mail, Menu, X } from "lucide-react";
+import {
+  Home,
+  User,
+  Code,
+  Briefcase,
+  FolderGit2,
+  FileText,
+  Mail,
+  Menu,
+  X,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import cvPdf from "@/assets/document/Cv-Gustavo-Arancibia.pdf";
+import { useToast } from "@/hooks/use-toast";
 
 type SidebarProps = {
   isCollapsed: boolean;
@@ -28,13 +40,17 @@ const iconMap = {
   contact: Mail,
 } as const;
 
-export default function Sidebar({ isCollapsed, onToggleCollapse }: SidebarProps) {
+export default function Sidebar({
+  isCollapsed,
+  onToggleCollapse,
+}: SidebarProps) {
+  const { toast } = useToast();
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("hero");
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = navItems.map(item => document.getElementById(item.id));
+      const sections = navItems.map((item) => document.getElementById(item.id));
       const scrollPosition = window.scrollY + 100;
 
       for (let i = sections.length - 1; i >= 0; i--) {
@@ -52,9 +68,15 @@ export default function Sidebar({ isCollapsed, onToggleCollapse }: SidebarProps)
 
   const handleDownload = () => {
     const link = document.createElement("a");
-    link.href = "/cv.pdf";
+    link.href = cvPdf;
     link.download = "CV_Frontend_Developer.pdf";
     link.click();
+
+    toast({
+      title: "Descarga completada",
+      description:
+        "Tu CV se ha descargado correctamente. ¡Gracias por tu interés en mi trabajo!",
+    });
   };
 
   const scrollToSection = (id: string) => {
@@ -70,11 +92,15 @@ export default function Sidebar({ isCollapsed, onToggleCollapse }: SidebarProps)
       <Button
         variant="ghost"
         size="icon"
-        className="fixed top-4 left-4 z-50 lg:hidden bg-sidebar border border-sidebar-border"
+        className="fixed top-4 left-4 z-50 lg:hidden bg-primary text-primary-foreground border border-primary hover:bg-primary/90"
         onClick={() => setIsMobileOpen(!isMobileOpen)}
         aria-label={isMobileOpen ? "Cerrar menú" : "Abrir menú"}
       >
-        {isMobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+        {isMobileOpen ? (
+          <X className="h-5 w-5" />
+        ) : (
+          <Menu className="h-5 w-5" />
+        )}
       </Button>
 
       {isMobileOpen && (
@@ -96,9 +122,15 @@ export default function Sidebar({ isCollapsed, onToggleCollapse }: SidebarProps)
             {!isCollapsed && (
               <div className="flex items-center gap-2 animate-fade-in">
                 <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                  <Code className="h-5 w-5 text-primary-foreground" />
+                  <img
+                    src="/images/icono.svg"
+                    alt="GufacStudio"
+                    className="h-5 w-5"
+                  />
                 </div>
-                <span className="font-bold text-lg text-foreground">GufacStudio</span>
+                <span className="font-bold text-lg text-foreground">
+                  GufacStudio
+                </span>
               </div>
             )}
             <Button
@@ -125,13 +157,16 @@ export default function Sidebar({ isCollapsed, onToggleCollapse }: SidebarProps)
                     "w-full flex items-center gap-3 px-3 py-3 rounded-lg transition-all duration-200",
                     "hover:bg-sidebar-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
                     isActive && "bg-sidebar-accent text-primary font-medium",
-                    !isActive && "text-sidebar-foreground hover:text-sidebar-accent-foreground",
+                    !isActive &&
+                      "text-sidebar-foreground hover:text-sidebar-accent-foreground",
                     isCollapsed && "justify-center"
                   )}
                   aria-current={isActive ? "page" : undefined}
                 >
                   <Icon className="h-5 w-5 flex-shrink-0" />
-                  {!isCollapsed && <span className="text-sm">{item.label}</span>}
+                  {!isCollapsed && (
+                    <span className="text-sm">{item.label}</span>
+                  )}
                 </button>
               );
             })}
