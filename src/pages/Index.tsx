@@ -18,7 +18,10 @@ export default function Index() {
 
   return (
     <div className="flex min-h-screen w-full bg-background text-foreground">
-      <Sidebar isCollapsed={isCollapsed} onToggleCollapse={() => setIsCollapsed((prev) => !prev)} />
+      <Sidebar
+        isCollapsed={isCollapsed}
+        onToggleCollapse={() => setIsCollapsed((prev) => !prev)}
+      />
       <main className={mainClassName}>
         <Hero />
         <About />

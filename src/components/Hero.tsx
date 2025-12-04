@@ -4,6 +4,7 @@ import { Download, Mail, Rocket } from "lucide-react";
 import profileImage from "@/assets/profile.png";
 import cvPdf from "@/assets/document/Cv-Gustavo-Arancibia.pdf";
 import { useToast } from "@/hooks/use-toast";
+import { HeroShapesBackground } from "@/components/ui/shape-landing-hero";
 
 const CV_FILE_NAME = "CV_Desarrollador_Frontend.pdf";
 const phrases = [
@@ -70,9 +71,10 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="min-h-screen flex items-center justify-center px-6 lg:px-12 bg-gradient-hero"
+      className="relative min-h-screen flex items-center justify-center px-6 lg:px-12 bg-gradient-hero overflow-hidden"
     >
-      <div className="max-w-7xl w-full grid lg:grid-cols-2 gap-12 items-center">
+      <HeroShapesBackground />
+      <div className="relative z-10 max-w-7xl w-full grid lg:grid-cols-2 gap-12 items-center">
         <div className="space-y-6 animate-fade-in">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary/50 border border-border">
             <Rocket className="h-4 w-4 text-primary animate-glow" />
