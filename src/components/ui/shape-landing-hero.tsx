@@ -213,11 +213,11 @@ function HeroShapesBackground() {
         />
         <ElegantShape
           delay={0.4}
-          width={260}
-          height={80}
+          width={240}
+          height={60}
           rotate={-8}
-          gradient="from-emerald-300/18"
-          className="hidden sm:block sm:left-[4%] sm:bottom-[-4%] md:left-[10%] md:bottom-[0%]"
+          gradient="from-emerald-300/10"
+          className="hidden sm:block sm:left-[4%] sm:bottom-[8%] md:left-[10%] md:bottom-[14%]"
         />
       </div>
     </div>

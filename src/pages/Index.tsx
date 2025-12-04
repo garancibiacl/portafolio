@@ -22,7 +22,7 @@ export default function Index() {
         isCollapsed={isCollapsed}
         onToggleCollapse={() => setIsCollapsed((prev) => !prev)}
       />
-      <main className={mainClassName}>
+      <main className={`${mainClassName} bg-gradient-hero`}>
         <Hero />
         <About />
         <Skills />

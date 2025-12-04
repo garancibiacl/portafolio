@@ -1,12 +1,10 @@
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Download, Mail, Rocket } from "lucide-react";
+import { Mail, Rocket } from "lucide-react";
 import profileImage from "@/assets/profile.png";
-import cvPdf from "@/assets/document/Cv-Gustavo-Arancibia.pdf";
 import { useToast } from "@/hooks/use-toast";
 import { HeroShapesBackground } from "@/components/ui/shape-landing-hero";
 
-const CV_FILE_NAME = "CV_Desarrollador_Frontend.pdf";
 const phrases = [
   "Experiencias digitales memorables",
   "Prototipos listos para producción",
@@ -51,19 +49,6 @@ export default function Hero() {
     return () => clearTimeout(timeout);
   }, [charIndex, isDeleting, phraseIndex]);
 
-  const handleDownload = () => {
-    const link = document.createElement("a");
-    link.href = cvPdf;
-    link.download = CV_FILE_NAME;
-    link.click();
-
-    toast({
-      title: "Descarga completada",
-      description:
-        "Tu CV se ha descargado correctamente. ¡Gracias por tu interés en mi trabajo!",
-    });
-  };
-
   const scrollToContact = () => {
     document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
   };
@@ -71,7 +56,7 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex items-center justify-center px-6 lg:px-12 bg-gradient-hero overflow-hidden"
+      className="relative min-h-screen flex items-center justify-center px-6 lg:px-12 overflow-hidden"
     >
       <HeroShapesBackground />
       <div className="relative z-10 max-w-7xl w-full grid lg:grid-cols-2 gap-12 items-center">
@@ -103,14 +88,6 @@ export default function Hero() {
           </p>
 
           <div className="flex flex-wrap gap-4">
-            <Button
-              size="lg"
-              className="bg-primary text-primary-foreground hover:bg-primary/90 shadow-glow"
-              onClick={handleDownload}
-            >
-              <Download className="mr-2 h-5 w-5" />
-              Descargar CV
-            </Button>
             <Button
               size="lg"
               variant="default"
