@@ -166,7 +166,7 @@ export const translations: Record<LanguageCode, Translation> = {
     languageSelectorAria: "Cambiar idioma",
     downloadFileName: "CV_Desarrollador_Frontend.pdf",
     footer: {
-      copyright: "© 2025 -2026 GufacStudio - Todos los derechos reservados",
+      copyright: "© 2026 Gustavo Arancibia - Todos los derechos reservados",
       madeWith: "Hecho con ❤️ y dedicación"
     },
     sidebar: {
@@ -376,7 +376,7 @@ export const translations: Record<LanguageCode, Translation> = {
           id: 7,
           title: "Ecommerce Pizzeria",
           description: "Sistema de ecommerce para pizzeria",
-          image: "/images/ecommerce-pizzeria.jpg",
+          image: "/images/desafio-pizzeria.png",
           tags: ["Node.js", "Express", "JWT", "MongoDB"],
           link: "https://pizzeria-mamma.netlify.app",
         },
@@ -400,7 +400,7 @@ export const translations: Record<LanguageCode, Translation> = {
           id: 10,
           title: "Nyxis Servicios e Ingeniería",
           description: "Sitio corporativo para servicios de ingeniería",
-          image: "/images/nyxis.jpg",
+          image: "/images/web-nyxis.png",
           tags: ["HTML", "CSS", "JavaScript", "Tailwind"],
           link: "https://nyxis.netlify.app",
         },
@@ -408,7 +408,7 @@ export const translations: Record<LanguageCode, Translation> = {
           id: 11,
           title: "Portal Salud – San Esteban",
           description: "Portal informativo municipal de salud (centros, novedades y orientación)",
-          image: "/images/cesfam-san-esteban.jpg",
+          image: "/images/portal-salud.png",
           tags: [
             "React",
             "TypeScript",

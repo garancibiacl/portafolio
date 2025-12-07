@@ -10,7 +10,7 @@ export default function Footer() {
         <div className="flex flex-col items-center space-y-4">
           <div className="flex flex-col items-center space-y-2">
             <p className="text-sm text-muted-foreground">
-              {copy.footer?.copyright || '© 2025 GufacStudio - Todos los derechos reservados'}
+              {copy.footer?.copyright || '© 2026 Gustavo Arancibia - Todos los derechos reservados'}
             </p>
             <p className="text-xs text-muted-foreground">
               {copy.footer?.madeWith || 'Hecho con ❤️ y dedicación'}
